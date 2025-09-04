@@ -23,6 +23,7 @@ Enter answers to the questions just below the >Answer: prompt.
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
 > Answer: 
+I previously have used R and RStudio 
 
 2. Are there any components of the course about which you feel confident?
 
