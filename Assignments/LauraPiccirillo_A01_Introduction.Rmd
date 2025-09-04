@@ -23,7 +23,8 @@ Enter answers to the questions just below the >Answer: prompt.
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
 > Answer: 
-I previously have used R and RStudio 
+I previously have used R and RStudio for data analysis required during my master's degree, where I was analyzing mostly quantitative deep-sea coral ages, growth rates, heights, widths, etc.
+I have no experience with Git, but I am very interested in learning to use it as I think it would be very useful for my upcoming data analysis during my PhD work, especially so both myself and my advisor can see data from my experiments.
 
 2. Are there any components of the course about which you feel confident?
 
