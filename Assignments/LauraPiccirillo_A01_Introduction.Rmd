@@ -23,16 +23,17 @@ Enter answers to the questions just below the >Answer: prompt.
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
 > Answer: 
-I previously have used R and RStudio for data analysis required during my master's degree, where I was analyzing mostly quantitative deep-sea coral ages, growth rates, heights, widths, etc.
-I have no experience with Git, but I am very interested in learning to use it as I think it would be very useful for my upcoming data analysis during my PhD work, especially so both myself and my advisor can see data from my experiments.
+I previously have used R and RStudio for data analysis required during my master's degree, where I was analyzing mostly quantitative deep-sea coral ages, growth rates, heights, widths, etc. I was introduced to R through a biostatistics course during my master's, which is where I began learning the programming language and software. Prior to that, I did some data analysis but was using excel. I have no experience with Git, but I am very interested in learning to use it as I think it would be very useful for my upcoming data analysis during my PhD work, especially so both myself and my advisor can see data from my experiments.
 
 2. Are there any components of the course about which you feel confident?
 
 > Answer: 
+I am pretty familiar with RStudio, and have recently started using R Markdown/Quarto documents for my own work, so I am confident in my abilities with using the software. I have basic knowledge of helpful data wrangling and visualization commands as well.
 
 3. Are there any components of the course about which you feel apprehensive?
 
 > Answer: 
+I have not used Git and GitHub before, so that software is new to me, but I am excited to become accustomed to it and be able to efficiently use it for my own work in the future!
 
 
 ## 2) GitHub
@@ -42,4 +43,4 @@ Provide a link below to your forked course repository in GitHub. Make sure you h
 > Answer: 
 
 ## 3) Knitting
-When you have completed this document, click the `knit` button.This should produce a PDF copy of your markdown document. Submit this PDF to Canvas 
+When you have completed this document, click the `knit` button. This should produce a PDF copy of your markdown document. Submit this PDF to Canvas 
