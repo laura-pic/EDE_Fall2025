@@ -33,14 +33,14 @@ I am pretty familiar with RStudio, and have recently started using R Markdown/Qu
 3. Are there any components of the course about which you feel apprehensive?
 
 > Answer: 
-I have not used Git and GitHub before, so that software is new to me, but I am excited to become accustomed to it and be able to efficiently use it for my own work in the future!
+I have not used Git and GitHub before, so that software is new to me, but I am excited to become accustomed to it and be able to efficiently use it for my own work in the future. I am also eager to learn and get more practice with data wrangling.
 
 
 ## 2) GitHub
 
 Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository and that you have updated your course README file, committed those changes, and pushed them to your GitHub account. 
 
-> Answer: 
+> Answer: https://github.com/laura-pic/EDE_Fall2025/tree/main
 
 ## 3) Knitting
 When you have completed this document, click the `knit` button. This should produce a PDF copy of your markdown document. Submit this PDF to Canvas 
