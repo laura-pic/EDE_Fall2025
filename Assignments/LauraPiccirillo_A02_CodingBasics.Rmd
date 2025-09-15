@@ -31,14 +31,16 @@ This exercise accompanies the lessons/labs in Environmental Data Analytics on co
 4.  Insert comments in your code to describe what you are doing.
 
 ```{r basics 1}
-#1. Creating a sequence from 1 to 55, increasing by 5, assigned to the name seq1. Using the sequence function for this.
+#1. Creating a sequence from 1 to 55, increasing by 5, 
+#assigned to the name seq1. Using the sequence function for this.
 seq1 <- seq(1, 55, 5)
 
 #2. Calculating the mean and median of seq1.
 mean(seq1)
 median(seq1)
 
-#3. Getting true/false answer for if the mean of seq1 is greater than the median of seq1.
+#3. Getting true/false answer for if the mean of seq1 is greater than 
+#the median of seq1.
 mean(seq1) > median(seq1)
 
 ```
