@@ -3,6 +3,8 @@ title: "Lab 3a - Exercises"
 author: "Environmental Data Analytics | John Fay and Luana Lima "
 date: "Fall 2025"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Set up the session
@@ -14,7 +16,9 @@ output: pdf_document
 
 ```{r Setup}
 #Import packages
-library(tidyverse); library(lubridate); library(here)
+library(tidyverse)
+library(lubridate)
+library(here)
 
 #Check workspace
 here()
@@ -39,16 +43,18 @@ pm25$Date <- mdy(pm25$Date)
 
 ```{r Explore the data}
 # Compute the number of different sites
-pm25$Site.ID
+nlevels(pm25$Site.Name)
 
 # Compute the mean and median PM 2.5 concentration
-
+mean(pm25$Daily.Mean.PM2.5.Concentration)
+median(pm25$Daily.Mean.PM2.5.Concentration)
 
 # What are the units
-
+pm25$UNITS
 
 # What is the date range (min and max dates)
-
+min(pm25$Date)
+max(pm25$Date)
 ```
 
 
@@ -61,14 +67,16 @@ pm25$Site.ID
 
 ```{r Visualize the data}
 #Number of samples using each different source 
-
+ggplot(data = pm25, aes(Source)) + geom_bar()
 
 #Distribution of daily mean concentration values
+ggplot(data = pm25, aes(Daily.Mean.PM2.5.Concentration)) + 
+  geom_histogram()
 
 
 #Distribution of daily mean concentration, by source
-
-
+ggplot(data = pm25, aes(Source, Daily.Mean.PM2.5.Concentration)) + 
+  geom_boxplot()
 
 ```
 
