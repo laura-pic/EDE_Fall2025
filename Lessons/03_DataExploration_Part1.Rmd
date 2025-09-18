@@ -144,11 +144,23 @@ Prior to running this, reset your workspace (Session->Restart R) to ensure it ru
 
 ```{r Setup}
 # Load packages
+#install.packages('dplyr')
+#install.packages('ggplot')
+#install.packages('here')
+#install.packages("tidyverse")
+
+library(dplyr)
+library(ggplot2)
+library(here)
+library(tidyverse)
 
 # Confirm working directory
+getwd()
 
 # Load the USGS flow data into a data frame
-
+USGS.flow.data <- read.csv(
+  file = here("./Data/Raw/USGS_Site02085000_Flow_Raw.csv"),
+  stringsAsFactors = TRUE)   
 ```
 
 ---
@@ -166,7 +178,7 @@ Take a moment to read through the README file associated with the USGS dataset o
 Next, have a look at your dataset. Browse your data in RStudio's viewer. Have a look at the structure of your data. Consider renaming columns. 
 
 ```{r Exploring data}
-View(USGS.flow.data)
+# View(USGS.flow.data)
 # Alternate option: click on data frame in Environment tab
 
 class(USGS.flow.data)
