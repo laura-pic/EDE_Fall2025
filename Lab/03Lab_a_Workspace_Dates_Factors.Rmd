@@ -3,6 +3,8 @@ title: "Lab 3b - Workspaces, Dates, and Factors"
 author: "Environmental Data Analytics | John Fay and Luana Lima "
 date: "Fall 2025"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Objectives
@@ -79,10 +81,17 @@ print(filenames)
 ```{r here in action}
 
 # 1. Read the 'NTL-LTER_Lake_ChemistryPhysics_Raw.csv' into a dataframe
-
+NTL_lake <- read.csv(
+  file = here("Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv"),
+  stringsAsFactors = T
+)
 
 # 2.
 library(tidyverse);library(here)
+filefolder <- here("Data", "Raw")
+files <- dir(filefolder, pattern = "EPAair_O3*.*", full.names = T)
+EPAdata <- files %>%
+  map(read_csv) %>% bind_rows()
 
 ```
 
@@ -103,9 +112,9 @@ Remember formatting of dates in R:
 # (code must be uncommented)
 today <- Sys.Date()
 format(today, format = "%B")
-#format(today, format = "")
-#format(today, format = "")
-#format(today, format = "")
+format(today, format = "%y")
+format(today, format = "%b")
+format(today, format = "%a")
 
 ```
 
@@ -133,8 +142,8 @@ date_obj_today
 
 #Ex_3 - on your own...
 str_juneteenth <- "19 June 1865"
-#date_juneteenth <- ()
-#date_juneteenth
+date_juneteenth <- dmy(str_juneteenth)
+date_juneteenth
 ```
 ### The century issue
 
@@ -337,10 +346,27 @@ usgs_flow_data$datetime = mdy(usgs_flow_data$datetime)
 usgs_flow_data$month <- month(usgs_flow_data$datetime)
 
 #Convert to a factor, with labels and levels
+usgs_flow_data$month <- factor(usgs_flow_data$month, levels=c("1","2","3","4","5","6","7","8","9","10","11","12")) 
 
+#See that the levels are updated
+levels(usgs_flow_data$month)
 
+#View the plot
+ggplot(usgs_flow_data,aes(x=month)) +
+  geom_bar() + 
+  scale_x_discrete(drop=FALSE)
+
+#Add **labels** to our factors
+usgs_flow_data$month <- factor(
+  usgs_flow_data$month, 
+  levels=seq(1:12),
+  labels=month.abb)
+
+levels(usgs_flow_data$month)
 #Plot
-
-
+ggplot(usgs_flow_data,aes(x=month)) +
+  geom_bar() + 
+  scale_x_discrete(drop=FALSE)
+#this didn't work - check the lab answers
 ```
 
