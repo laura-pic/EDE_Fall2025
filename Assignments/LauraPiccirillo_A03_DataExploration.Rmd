@@ -32,14 +32,29 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 
 1.  Load necessary packages (tidyverse, lubridate, here), check your current working directory and upload two datasets: the ECOTOX neonicotinoid dataset (ECOTOX_Neonicotinoids_Insects_raw.csv) and the Niwot Ridge NEON dataset for litter and woody debris (NEON_NIWO_Litter_massdata_2018-08_raw.csv). Name these datasets "Neonics" and "Litter", respectively. Be sure to include the subcommand to read strings in as factors.
 
-```{r setup,  message = FALSE}
-install.packages("tidyverse")
-install.packages("lubridate")
-install.packages("here")
+```{r Setting up R session and Loading Data,  message = FALSE}
+#installing necessary packages
+#install.packages("tidyverse")
+#install.packages("lubridate")
+#install.packages("here")
+
+#loading packages into library
 library(tidyverse)
 library(lubridate)
 library(here)
 
+#checking working directory
+getwd()
+here()
+
+#loading datasets
+Neonics <- read.csv(
+  file = here("Data/Raw/ECOTOX_Neonicotinoids_Insects_raw.csv"),
+  stringsAsFactors = TRUE)
+  
+Litter <- read.csv(
+  file = here("Data/Raw/NEON_NIWO_Litter_massdata_2018-08_raw.csv"),
+  stringsAsFactors = TRUE)
 
 ```
 
@@ -47,86 +62,98 @@ library(here)
 
 2.  The neonicotinoid dataset was collected from the Environmental Protection Agency's ECOTOX Knowledgebase, a database for ecotoxicology research. Neonicotinoids are a class of insecticides used widely in agriculture. The dataset that has been pulled includes all studies published on insects. Why might we be interested in the ecotoxicology of neonicotinoids on insects? Feel free to do a brief internet search if you feel you need more background information.
 
-> Answer:
+> Answer: Neonicotinoids are a type of insecticides, meaning they are applied to agriculture sites to control unwanted pests. However, they also have been shown to effect non-target insects like bees in negative ways, meaning close monitoring of their application and ecotoxicology is key to protect certain insect groups from being harmed. Additionally, understanding the effect of this insecticide on target insects in relation to their age and species could be of interest to realize the effect of the chemical based on life-history traits and exposure types.
 
 3.  The Niwot Ridge litter and woody debris dataset was collected from the National Ecological Observatory Network, which collectively includes 81 aquatic and terrestrial sites across 20 ecoclimatic domains. 32 of these sites sample forest litter and woody debris, and we will focus on the Niwot Ridge long-term ecological research (LTER) station in Colorado. Why might we be interested in studying litter and woody debris that falls to the ground in forests? Feel free to do a brief internet search if you feel you need more background information.
 
-> Answer:
+> Answer: Forest litter and woody debris likely play a critical role in the cycling of organic matter in forest environments. Additionally, the presence of forest litter could determine risks of the forest to various natural disasters, such as wildfire threats. Forest litter also can serve as a proxy for terrestrial net primary productivity.
 
 4.  How is litter and woody debris sampled as part of the NEON network? Read the NEON_Litterfall_UserGuide.pdf document to learn more. List three pieces of salient information about the sampling methods here:
 
 > Answer: 
- 1.
- 2.
- 3. 
+ 1. Litter and woody debris are weighed and categorized by plant functional groups, and they are collected with elevated and/or ground traps. These analyses only happen at sites with woody vegetation >2m tall.
+ 2. Mass accuracy for dry weights is to 0.01 grams. Weights less than 0.01g are reported and represent the presence of a functional group, but not a reliable mass.
+ 3. Masses are reported from a single trap for spatial resolution and from one collection event for temporal resolution.
 
 ## Obtain basic summaries of your data (Neonics)
 
 5.  What are the dimensions of the dataset?
 
-```{r Q5}
-
-
+```{r Q5 looking at dimensions of dataset}
+#dimensions of dataset
+dim(Neonics) 
 ```
 
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest? [Tip: The `sort()` command is useful for listing the values in order of magnitude...]
 
-```{r Q6}
-
+```{r Q6 Summarizing the effect column of the dataset}
+#sorting the effect column from lowest to highest counts
+sort(summary(Neonics$Effect)) 
 
 ```
 
-> Answer:
+> Answer: The most common effects studied are population, mortality, and behavior. These would specifically be of interest because they are the most common responses from introduction of the insecticides, and they involve critical functions of the organism that represent how the chemical impacts them.
 
 
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: Explore the help on the `summary()` function, in particular the `maxsum` argument...]
 
-```{r Q7}
-
+```{r Determing six most commonly studied species Q7}
+#summarizing the six most common species with the summary and maxsum function
+summary(Neonics$Species.Common.Name, maxsum = 7) 
 
 ```
 
-> Answer:
+> Answer: Honey Bee, Parasitic Wasp, Buff Tailed Bumblebee, Carniolan Honey Bee, Bumble Bee, Italian Honeybee. These species are all stinging and likely pollinating insects, which the insecticides are not aiming to harm usually, so their impact is of interest.
 
 8.  Concentrations are always a numeric value. What is the class of `Conc.1..Author.` column in the dataset, and why is it not numeric? [Tip: Viewing the dataframe may be helpful...]
 
-```{r Q8}
+```{r Looking at class of Conc.1..Author Q8}
+#determining data type for Conc.1..Author.
+class(Neonics$Conc.1..Author.)
 
+#seeing the number of levels within the column
+levels(Neonics$Conc.1..Author.)
 
 ```
 
-> Answer:
+> Answer: Factor. It is not numeric because some of the data inputs contain the "/" symbol, and numeric variables can only contain integers.
 
 ## Explore your data graphically (Neonics)
 
 9.  Using `geom_freqpoly`, generate a plot of the number of studies conducted by publication year.
 
-```{r Q9}
-
+```{r Plotting number of studies per publication year Q9}
+#Plotting number of studies each publication year with ggplot
+ggplot(Neonics, aes(Publication.Year, bins = 10)) + geom_freqpoly()
 
 ```
 
 10. Reproduce the same graph but now add a color aesthetic so that different Test.Location are displayed as different colors.
 
-```{r Q10}
-
+```{r Plotting number of studies per publication year with Test Location shown Q10}
+#Plotting number of studies each publication year with ggplot and 
+#indicating the test location by color
+ggplot(Neonics, aes(Publication.Year, bins = 10, colour = Test.Location)) + 
+  geom_freqpoly()
 
 ```
 
 Interpret this graph. What are the most common test locations, and do they differ over time?
 
-> Answer:
+> Answer: The most common test locations are the lab and natural field, with artifical field and undeterminable field consistently the lowest. Natural field and lab do differ overtime, with both showing periods of being the most common test location.
 
 11. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information. 
 
 [**TIP**: Add `theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))` to the end of your plot command to rotate and align the X-axis labels...]
 
-```{r Q11}
-
+```{r Plotting ennpoint variation Q11}
+#Plotting counts of endpoints with a bar graph
+ggplot(Neonics, aes(Endpoint)) + geom_bar() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 ```
 
-> Answer:
+> Answer: Two most common endpoints are LOEL and NOEL. LOEL is a terrestrial "lowest observable effect level": the lowest dose producing significantly different effects during experiments. NOEL is a terrestrial "no observable effect level": highest dose producing no significant effects from the controls.
 
 ## Explore your data (Litter)
 
