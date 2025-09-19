@@ -79,7 +79,7 @@ Litter <- read.csv(
 
 5.  What are the dimensions of the dataset?
 
-```{r Q5 looking at dimensions of dataset}
+```{r Q5 Looking at dimensions of dataset}
 #dimensions of dataset
 dim(Neonics) 
 ```
@@ -159,38 +159,61 @@ ggplot(Neonics, aes(Endpoint)) + geom_bar() +
 
 12. Determine the class of collectDate. Is it a date? If not, change to a date and confirm the new class of the variable. Using the `unique` function, determine which dates litter was sampled in August 2018.
 
-```{r Q12}
+```{r Litter collectDate exploration Q12}
+#determining class of collectDate
+class(Litter$collectDate)
 
+#changing collectDate to a date
+Litter$collectDate <- ymd(Litter$collectDate)
 
+#confirming collectDate is now a date
+class(Litter$collectDate)
+
+#determine sampling dates from August 2018
+unique(Litter$collectDate)
 ```
+
+> Answer: Litter was sampled on August 2 and 30 of 2018.
 
 13. Using the `unique` function, list the different plotIDs sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
-```{r Q13}
+```{r Observing PlotIDs Q13}
+#listing plotIDs with unique function
+unique(Litter$plotID)
 
+#listing plotIDs with summary function to compare
+summary(Litter$plotID)
 
 ```
 
-> Answer:
+> Answer: The unique function only provides a list of the plotIDs as factor levels, while the summary function provides all the PlotIDs along with the number of datapoints within each ID.
 
 14. Create a bar graph of functionalGroup counts. This shows you what type of litter is collected at the Niwot Ridge sites. Notice that litter types are fairly equally distributed across the Niwot Ridge sites.
 
-```{r Q14}
-
+```{r Visualizing functional group counts Q14}
+#bar graph of functional group counts
+ ggplot(Litter, aes(functionalGroup)) + geom_bar()
 
 ```
 
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
 
-```{r Q15}
+```{r Visualizing dry mass by functional group Q15}
+#boxplot
+ggplot(Litter, aes(functionalGroup, dryMass)) + geom_boxplot()
 
+#violin plot
+ggplot(Litter, aes(functionalGroup, dryMass)) + geom_violin()
+
+#observing the amount of points in each functional group
+summary(Litter$functionalGroup)
 
 ```
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
 
-> Answer:
+> Answer: The different functional groups all have similar amounts of datapoints, meaning the density aspect of the violin plot is not legible for this dataset, and instead you only see vertical lines with little information.
 
 What type(s) of litter tend to have the highest biomass at these sites?
 
-> Answer:
+> Answer: Needles and twigs/branches. Mixed litters also have high biomasses.
