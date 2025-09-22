@@ -82,6 +82,7 @@ Litter <- read.csv(
 ```{r Q5 Looking at dimensions of dataset}
 #dimensions of dataset
 dim(Neonics) 
+
 ```
 
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest? [Tip: The `sort()` command is useful for listing the values in order of magnitude...]
@@ -92,7 +93,7 @@ sort(summary(Neonics$Effect))
 
 ```
 
-> Answer: The most common effects studied are population, mortality, and behavior. These would specifically be of interest because they are the most common responses from introduction of the insecticides, and they involve critical functions of the organism that represent how the chemical impacts them.
+> Answer: The most common effects studied are population, mortality, and behavior. These would specifically be of interest because they are the most common responses from introduction of the insecticide, and they involve critical functions of the organism that represent how the chemical impacts them.
 
 
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: Explore the help on the `summary()` function, in particular the `maxsum` argument...]
