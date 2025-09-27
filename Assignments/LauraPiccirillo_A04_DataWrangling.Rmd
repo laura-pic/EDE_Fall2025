@@ -152,6 +152,8 @@ EPA_all_b <- EPA_all %>% filter(Site.Name %in% c("Linville Falls",
   "West Johnston Co.", "Garinger High School", "Castle Hayne", 
   "Pitt Agri. Center", "Bryson City", "Millbrook School")) %>% 
   group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>%
+  filter(!is.na(DAILY_AQI_VALUE) & !is.na(SITE_LATITUDE) & 
+           !is.na(SITE_LONGITUDE)) %>%
   summarise(mean_AQI = mean(DAILY_AQI_VALUE), 
             mean_lat = mean(SITE_LATITUDE), 
             mean_long = mean(SITE_LONGITUDE)) %>% 
