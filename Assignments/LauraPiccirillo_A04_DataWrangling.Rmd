@@ -145,7 +145,7 @@ write.csv(EPAair_PM_2019_select, row.names = FALSE, file = "~/ENV 872/Data/Proce
 #7 combining the datasets
 EPA_all <- rbind(EPAair_2018_select, EPAair_2019_select, EPAair_PM_2018_select, EPAair_PM_2019_select)
 
-#8 
+#8 wrangling dataset with pipe function
 EPA_all_b <- EPA_all %>% filter(Site.Name %in% c("Linville Falls", 
   "Durham Armory", "Leggett", "Hattie Avenue",  
   "Clemmons Middle", "Mendenhall School", "Frying Pan Mountain", 
@@ -159,14 +159,15 @@ EPA_all_b <- EPA_all %>% filter(Site.Name %in% c("Linville Falls",
             mean_long = mean(SITE_LONGITUDE)) %>% 
   mutate(month = month(Date), year = year(Date))
 
-#9
+#9 pivot wider so AQI values for ozone vs PM2.5 are in 2 columns
+EPA_all_b_wider <- EPA_all_b %>%
+  pivot_wider(names_from = AQS_PARAMETER_DESC, values_from = mean_AQI)
 
+#10 dimensions of tidy dataset
+dim(EPA_all_b_wider)
 
-#10
-
-
-#11
-
+#11 save csv of tidy dataset
+write.csv(EPA_all_b_wider, row.names = FALSE, file = "~/ENV 872/Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
 
 ```
 
