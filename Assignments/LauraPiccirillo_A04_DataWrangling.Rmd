@@ -82,10 +82,10 @@ dim(EPAair_PM_2019)
 
 ```{r questions 3 thru 4}
 #3 changing date columns to be date objects
-EPAair_2018$Date <- as.Date(EPAair_2018$Date, format = "%m/%d/%y")
-EPAair_2019$Date <- as.Date(EPAair_2019$Date, format = "%m/%d/%y")
-EPAair_PM_2018$Date <- as.Date(EPAair_PM_2018$Date, format = "%m/%d/%y")
-EPAair_PM_2019$Date <- as.Date(EPAair_PM_2019$Date, format = "%m/%d/%y")
+EPAair_2018$Date <- as.Date(EPAair_2018$Date, format = "%m/%d/%Y")
+EPAair_2019$Date <- as.Date(EPAair_2019$Date, format = "%m/%d/%Y")
+EPAair_PM_2018$Date <- as.Date(EPAair_PM_2018$Date, format = "%m/%d/%Y")
+EPAair_PM_2019$Date <- as.Date(EPAair_PM_2019$Date, format = "%m/%d/%Y")
 
 #4 selecting 7 columns of data to work with
 EPAair_2018_select <- select(EPAair_2018, Date, DAILY_AQI_VALUE, 
@@ -106,10 +106,14 @@ EPAair_PM_2018_select$AQS_PARAMETER_DESC <- "PM2.5"
 EPAair_PM_2019_select$AQS_PARAMETER_DESC <- "PM2.5"
 
 #6 saving processed datasets
-write.csv(EPAair_2018_select, row.names = FALSE, file = "~/ENV 872/Data/Processed/EPAair_O3_NC2018_processed.csv")
-write.csv(EPAair_2019_select, row.names = FALSE, file = "~/ENV 872/Data/Processed/EPAair_O3_NC2019_processed.csv")
-write.csv(EPAair_PM_2018_select, row.names = FALSE, file = "~/ENV 872/Data/Processed/EPAair_PM25_NC2018_processed.csv")
-write.csv(EPAair_PM_2019_select, row.names = FALSE, file = "~/ENV 872/Data/Processed/EPAair_PM25_NC2019_processed.csv")
+write.csv(EPAair_2018_select, row.names = FALSE, 
+          file = "~/ENV 872/Data/Processed/EPAair_O3_NC2018_processed.csv")
+write.csv(EPAair_2019_select, row.names = FALSE, 
+          file = "~/ENV 872/Data/Processed/EPAair_O3_NC2019_processed.csv")
+write.csv(EPAair_PM_2018_select, row.names = FALSE, 
+          file = "~/ENV 872/Data/Processed/EPAair_PM25_NC2018_processed.csv")
+write.csv(EPAair_PM_2019_select, row.names = FALSE, 
+          file = "~/ENV 872/Data/Processed/EPAair_PM25_NC2019_processed.csv")
 
 ```
 
@@ -143,7 +147,8 @@ write.csv(EPAair_PM_2019_select, row.names = FALSE, file = "~/ENV 872/Data/Proce
 
 ```{r questions 7 thru 11}
 #7 combining the datasets
-EPA_all <- rbind(EPAair_2018_select, EPAair_2019_select, EPAair_PM_2018_select, EPAair_PM_2019_select)
+EPA_all <- rbind(EPAair_2018_select, EPAair_2019_select, 
+                 EPAair_PM_2018_select, EPAair_PM_2019_select)
 
 #8 wrangling dataset with pipe function
 EPA_all_b <- EPA_all %>% filter(Site.Name %in% c("Linville Falls", 
@@ -167,7 +172,9 @@ EPA_all_b_wider <- EPA_all_b %>%
 dim(EPA_all_b_wider)
 
 #11 save csv of tidy dataset
-write.csv(EPA_all_b_wider, row.names = FALSE, file = "~/ENV 872/Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
+write.csv(EPA_all_b_wider, 
+          row.names = FALSE, 
+          file = "~/ENV 872/Data/Processed/EPAair_O3_PM25_NC1819_Processed.csv")
 
 ```
 
@@ -180,16 +187,18 @@ write.csv(EPA_all_b_wider, row.names = FALSE, file = "~/ENV 872/Data/Processed/E
 
 ```{r questions 12 and 13}
 
-#12
+#12 generating a summary data frame
+EPA_all_summary <- EPA_all_b_wider %>% 
+  group_by(Site.Name, month, year) %>%
+  summarise(mean_AQI_PM2.5 = mean(PM2.5), mean_AQI_ozone = mean(Ozone)) %>%
+  drop_na(mean_AQI_ozone)
 
-
-#13
-
-
+#13 dimensions of final data frame
+dim(EPA_all_summary)
 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`? Hint: replace `drop_na` with `na.omit` in part 12 and observe what happens with the dimensions of the summary date frame.
 
-> Answer: 
+> Answer: The number of rows decreased with na.omit because it removed rows with NA values in PM2.5 as well, which we didn't want. It seems that na.omit will omit any rows with NA values across any of the columns.
 
