@@ -200,5 +200,4 @@ dim(EPA_all_summary)
 
 14. Why did we use the function `drop_na` rather than `na.omit`? Hint: replace `drop_na` with `na.omit` in part 12 and observe what happens with the dimensions of the summary date frame.
 
-> Answer: The number of rows decreased with na.omit because it removed rows with NA values in PM2.5 as well, which we didn't want. It seems that na.omit will omit any rows with NA values across any of the columns.
-
+> Answer: The number of rows decreased with na.omit because it removed rows with NA values in PM2.5 as well, which we didn't want. It seems that na.omit will omit any rows with NA values across any of the columns, while drop_na only omits NA values from the column specified in the function.
