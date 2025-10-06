@@ -31,7 +31,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Vi
 2. Make sure R is reading dates as date format; if not change the format to date.
 
 ```{r initialize project}
-#1 installing and loading packages, checking working directory
+#1 installing and loading packages, checking working directory, loading data
 #install.packages("tidyverse")
 #install.packages("here")
 #install.packages("cowplot")
@@ -80,7 +80,7 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 4. [NTL-LTER] Plot total phosphorus (`tp_ug`) by phosphate (`po4`), with separate aesthetics for Peter and Paul lakes. Add line(s) of best fit using the `lm` method. Adjust your axes to hide extreme values (hint: change the limits using `xlim()` and/or `ylim()`).
 
 ```{r plot total P vs PO4}
-#4 lake phosphorus plotting
+#4 lake phosphorus and phosphate plotting
 ggplot(PeterPaul, aes(po4, tp_ug, color = lakename)) + geom_point() +
   geom_smooth(method = lm) + xlim(0, 45) + plot_theme + 
   xlab("Phosphate (mg/L)") + ylab("Total Phosphorus (mg/L)") +
@@ -140,14 +140,14 @@ Question: What do you observe about the variables of interest over seasons and b
 7. [Niwot Ridge] Now, plot the same plot but with NLCD classes separated into three facets rather than separated by color. 
 
 ```{r Plot litter}
-#6
+#6 dry mass by date for needles group only
 ggplot(subset(litter, functionalGroup == "Needles"), aes(collectDate, dryMass,
        color = nlcdClass)) + geom_point(size = 2.5) + plot_theme + 
   ylab("Dry Mass (g)") + labs(color = "NLCD Class") + xlab("Collection Date") +
   scale_color_brewer(palette = "Dark2") +
   scale_x_date(date_breaks = "4 months", date_labels = "%b %Y") 
 
-#7
+#7 faceted by NLCD class
 ggplot(subset(litter, functionalGroup == "Needles"), 
        aes(collectDate, dryMass)) + geom_point(size = 2.5) +
   facet_wrap(vars(nlcdClass), nrow = 3) + plot_theme + 
