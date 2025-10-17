@@ -3,7 +3,10 @@ title: 'A06 - Crafting Reports'
 author: "Laura Piccirillo" 
 date: "Fall 2025"
 output: pdf_document
+toc: true
 ---
+
+\listoffigures
 
 ## Objectives:
 
@@ -95,8 +98,10 @@ summary_Ozone <- epa_data %>%
   arrange(mean_Ozone)
 
 #Use the `kable` function to produce the 2 tables in markdown format
-knitr::kable(summary_PM25, caption = "Mean Particulates (2.5mm)", col.names = c("County", "$\\mu g/m^3$"))
-knitr::kable(summary_Ozone, caption = "Mean Ozone", col.names = c("County", "$\\mu g/m^3$"))
+knitr::kable(summary_PM25, caption = "Mean Particulates (2.5mm)", 
+             col.names = c("County", "$\\mu g/m^3$"))
+knitr::kable(summary_Ozone, caption = "Mean Ozone", 
+             col.names = c("County", "$\\mu g/m^3$"))
 
 ```
 
@@ -107,12 +112,12 @@ knitr::kable(summary_Ozone, caption = "Mean Ozone", col.names = c("County", "$\\
 Below this paragraph, but above the horizonal line (`---`), create two separate code chunks that create boxplots of the distribution of Ozone levels by month using, one for only records collected in 2018 and one for records in 2019. Customize the chunk options such that the final figures are displayed but not the code used to generate the figures. In addition, align the plots on the left side of the page and set the figure heights so both plots fit on the same page with minimal space remaining. Lastly, add a `fig.cap` chunk option to add a caption (title) to your plot that will display underneath the figure.
 ```{r plot2018, echo=FALSE, warning=FALSE, fig.align='left',fig.height=3, fig.cap= "2018 monthly Ozone levels"}
 epa_data_2018 <- epa_data %>% filter(Year == 2018)
-ggplot(epa_data_2018, aes(x=factor(Month, levels=1:12, 
-                                            labels=month.abb), 
+ggplot(epa_data_2018, aes(x=factor(Month, levels=1:12, labels=month.abb), 
                                    y = Ozone)) + geom_boxplot() + 
-  xlab("Month") + ylab("Concentration ", mu, "g/")
-                       #, m^{3}, ")") + ggtitle("")
-#"Mean is ", mu,", ", R^{2},"=0.6"
+  xlab("Month") + 
+  labs(y=expression(paste("Concentration (", mu,"g/m"^{3},")"))) + 
+  ggtitle("Monthly Ozone concentrations (2018)")
+
 ```
 
 
@@ -120,10 +125,12 @@ ggplot(epa_data_2018, aes(x=factor(Month, levels=1:12,
 epa_data_2019 <- epa_data %>% filter(Year == 2019)
 ggplot(epa_data_2019, aes(x=factor(Month, levels=1:12, 
                                             labels=month.abb), 
-                                   y = Ozone)) + geom_boxplot() + xlab("Month")
+                                   y = Ozone)) + geom_boxplot() + 
+  xlab("Month") + 
+  labs(y=expression(paste("Concentration (", mu,"g/m"^{3},")"))) + 
+  ggtitle("Monthly Ozone concentrations (2019)")
 
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -134,3 +141,7 @@ ggplot(epa_data_2019, aes(x=factor(Month, levels=1:12,
 Add a table of contents and list of figures to your document and knit to a PDF. Submit your PDF to Sakai, but also be sure to commit and push your Rmd file used to create this knit document to GitHub. In the section below, add a link to your GitHub repository. **Lastly, add the statement that you did not use AI in the completion of this assignment followed by your name and the date.**
 
 ## Git Repository
+
+I did not use AI in the completion of this assignment.
+Laura Piccirillo
+10/15/2025
