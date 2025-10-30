@@ -83,16 +83,20 @@ BR_complete <- inner_join(Rainfall_BR_processed,Temp_BR_processed)
 ```{r}
 
 #Exercise 5: Check if there is any missing data for both temperature and rainfall series.
-
-
-
+Months <- as.data.frame(seq.Date(from =as.Date("1901/01/01"),
+                                 to = as.Date("2016/12/01"),
+                                 by = "month"))
+colnames(Months) <- "Date"
+BR_complete <- left_join(Months, BR_complete)
+summary(BR_complete)
 
 #Exercise 6: Plot both series over time on separate plots. Add a trend line using geom_smooth(). Can you say something about the trend just by visualizing the data?
 
+ggplot(Temp_BR_processed, aes(Date, Temperature_C)) + geom_line() + 
+  geom_smooth(method = lm, se = F)
 
-
-
-
+ggplot(Rainfall_BR_processed, aes(Date, Rainfall)) + geom_line() + 
+  geom_smooth(method = lm, se = F)
 
 ```
 
@@ -100,8 +104,16 @@ BR_complete <- inner_join(Rainfall_BR_processed,Temp_BR_processed)
 
 ```{r}
 #Exercise 7: Create a time series objects for each series using ts(). Make sure you specify the starting point and frequency.
+f_month <- month(first(BR_complete$Date))
+f_year <- year(first(BR_complete$Date))
 
+rainfall_ts <- ts(BR_complete$Rainfall,
+                  start = c(f_month,f_year),
+                  frequency = 12)
 
+temp_ts <- ts(BR_complete$Temperature_C,
+                  start = c(f_month,f_year),
+                  frequency = 12)
 
 ```
 
@@ -123,17 +135,21 @@ The `stl` function decomposes the time series object into its component parts. W
 # Exercise 8: Use the stl() function to decompose both series. 
 # Visualize the decomposed series using plot(). What components can you identify?
 
+BR_rain_decom <- stl(rainfall_ts, s.window = "periodic")
+plot(BR_rain_decom)
 
-
-
+BR_temp_decom <- stl(temp_ts, s.window = "periodic")
+plot(BR_temp_decom)
 
 
 # Exercise 9: Use the times series object generated with the stl() to extract the 
 # components of each series and turn them into data frames.
 
+BR_rain_components <-
+  as.data.frame(BR_rain_decom$time.series[,1:3])
 
-
-
+BR_temp_components <-
+  as.data.frame(BR_temp_decom$time.series[,1:3])
 
 
 # Exercise 10: Visualize how the trend maps onto the data for both series
