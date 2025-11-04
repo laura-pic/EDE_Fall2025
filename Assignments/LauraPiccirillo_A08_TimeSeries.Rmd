@@ -26,7 +26,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on general
 * Load the tidyverse, lubridate, zoo, and trend packages
 * Set your ggplot theme
 
-```{r, session setup}
+```{r, session setup, warning=FALSE}
 #install.packages("tidyverse")
 #install.packages("lubridate")
 #install.packages("zoo")
@@ -120,7 +120,8 @@ Study question: Have ozone concentrations changed over the 2010s at this station
 ```{r}
 #8 linear interpolation to fill in missing data
 GaringerOzone <- GaringerOzone %>%
-  mutate(Daily.Max.8.hour.Ozone.Concentration = zoo::na.approx(Daily.Max.8.hour.Ozone.Concentration))
+  mutate(Daily.Max.8.hour.Ozone.Concentration =
+         zoo::na.approx(Daily.Max.8.hour.Ozone.Concentration))
 
 ```
 
@@ -180,7 +181,7 @@ summary(monthly_trend)
 
 ```
 
-> Answer: The seasonal Mann-Kendall is the most appropriate trend analysis because this test is specific for seasonal data, non-parametric data, which we have in our dataset.
+> Answer: The seasonal Mann-Kendall is the most appropriate trend analysis because this test is specific for seasonal, non-parametric data, which we have in our dataset.
 
 13. Create a plot depicting mean monthly ozone concentrations over time, with both a geom_point and a geom_line layer. Edit your axis labels accordingly.
 
