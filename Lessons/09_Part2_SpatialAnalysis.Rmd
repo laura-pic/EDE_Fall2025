@@ -116,16 +116,16 @@ mapView(counties_sf)
 
 ```{r read HUCs shapefile}
 #Read the shapefile into an sf dataframe named "huc8_sf"
-huc8_sf <- 
+huc8_sf <- st_read(here('./Data/Spatial/NCHUC8.shp'))
 
 #Reveal the column names
-
+colnames(huc8_sf)
 
 #Check the CRS
-
+st_crs(huc8_sf)
 
 #View the data as a map, colored by the acreage in each
-
+mapview(huc8_sf, zcol = 'ACRES')
 
 ```
 
@@ -136,11 +136,15 @@ huc8_sf <-
 
 ```{r Select the Upper Neuse HUC 8}
 #Read the shapefile into an sf dataframe
+huc8_sf_b <- st_read(here('./Data/Spatial/NCHUC8.shp')) %>%
+  filter(SUBBASIN == "Upper Neuse")
 
 
 #Create a map
+mapview(huc8_sf, col.regions='gray') +
+  mapview(upper_neuse_sf,col.regions='yellow',color = 'blue')
 
-
+#cannot use mapview with files knitted to PDFs
 ```
 
 ---
@@ -217,7 +221,7 @@ ggplot() +
 
 ```{r}
 #Import data, setting HUC_12 to be factors, and computing a HUC_8 column
-
+test <- read.csv(here())
   
 #Join to HUC_8 features
 
