@@ -82,6 +82,12 @@ mapview(gas_plants)
 
 ```
 
+```{r test}
+data_source <- paste0('https://services6.arcgis.com/3Sj1fiIDvQtFfbvg/arcgis/rest/services/',
+'GasStations/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson')
+gas_stations <- st_read(data_source)
+mapview(gas_stations)
+```
 
 Another resource is hosted by the US Fish & Wildlife Their open data site (<https://gis-fws.opendata.arcgis.com/>) has links to many datasets.
 
