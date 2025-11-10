@@ -70,8 +70,8 @@ mapview(nebraska_counties)
 
 6.    What is the EPSG code of the Counties dataset? Is this a geographic or a projected coordinate reference system? (In other words, does this CRS use angular or planar coordinate units?) To what datum is this CRS associated? (Tip: lookup the EPSG code on <https://epsg.io> or <https://spatialreference.org>)
 
-> ANSWER: 4269. This is a geographic CRS as it uses latitude/longitude measurements (angular units)
-> This datum is associated with the North American Datum 1983.
+> ANSWER: 4269. This is a geographic CRS as it uses latitude/longitude measurements (angular units). This datum is
+>associated with the North American Datum 1983.
 
 
 ### Read in gage locations csv as a dataframe, then display the column names it contains
@@ -97,6 +97,7 @@ glimpse(gage_locations)
 ```
 
 9.    What columns in the dataset contain the x and y coordinate values, respectively?  
+
 > ANSWER: dec_long_va (x coordinates) and dec_lat_va (y coordinates).
 
 
@@ -112,7 +113,6 @@ glimpse(gage_locations)
 gage_sf <- gage_locations %>%
   st_as_sf(coords = c('dec_long_va','dec_lat_va'), crs=4269)
 
-
 #11. Display the structure
 glimpse(gage_sf)
 
@@ -120,7 +120,7 @@ glimpse(gage_sf)
 
 12.   What new field(s) appear in the sf dataframe created? What field(s), if any, disappeared?
 
->ANSWER: A geometry field appeared in the sf dataframe of gage locations. dec_lat_va and dec_long_va disappeared in the >new sf dataframe.
+>ANSWER: A geometry field appeared in the sf dataframe of gage locations. dec_lat_va and dec_long_va disappeared in the new sf dataframe.
 
 
 ### Plot the gage locations on top of the counties
@@ -181,13 +181,12 @@ dim(all_gage)
 ### Map the pattern of gage height data
 
 Now we can examine where the flooding appears most acute by visualizing gage heights spatially.
+
 19.   Plot the gage sites on top of counties (using `mapview`, `ggplot`, or `leaflet`) 
     *   Show the magnitude of gage height by color, shape, other visualization technique.
 
 ```{r map gage sites}
 #Map the points, sized by gage height
-#mapview(nebraska_counties, col.regions = "gray") + 
-  #mapview(all_gage, zcol = "gage_ht")
 
 ggplot() + geom_sf(data=nebraska_counties, color = "gray") +
   geom_sf(data = all_gage, aes(color = gage_ht)) + 
@@ -226,6 +225,7 @@ ggplot() + geom_sf(data=nebraska_counties_2) +
 ### Select the gages falling within a given county
 
 Now let's zoom into a particular county and examine the gages located there. 
+
 22. Select Washington county from your projected county sf dataframe 
 23. Select the gage sites falling within that county to a new spatial dataframe
 24. Select the gage sites within 20km of the county to a new spatial dataframe
@@ -252,8 +252,10 @@ washington_20km_gages <- gage_sf_2 %>%
 
 #25 Plot
 ggplot() + geom_sf(data = nebraska_counties_2) + 
-  geom_sf(data = washington, fill = "red") + 
-  geom_sf(data=washington_20km_gages, color = "black") + 
-  geom_sf(data=washington_gages, color = "green")
+  geom_sf(data = washington, fill = "navyblue", color = "black") + 
+  geom_sf(data=washington_20km_gages, color = "orange") + 
+  geom_sf(data=washington_gages, color = "red") + 
+  ggtitle("Nebraska Counties & NWIS Gage Locations") +
+  labs(subtitle = "Washington County + Gages within a 20km radius")
 
 ```
